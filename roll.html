@@ -1,12 +1,28 @@
-<html>
-<body>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+<html> 
+<head> 
+  <title>Roll!!</title> 
+  <meta name="generator" content="editplus"> 
+  <meta name="author" content=""> 
+  <meta name="keywords" content=""> 
+  <meta name="description" content=""> 
+  <script type="text/javascript"> 
+   function createInput() 
+   { 
+    var inputdiv = document.getElementById("inputDiv"); 
 
-<script type="text/javascript">
+    var br = document.createElement("br"); 
+    inputdiv.appendChild(br); 
+    var input1 = document.createElement("input"); 
+    input1.setAttribute("type", "text"); 
+	input1.setAttribute("value", Math.floor(Math.random()*101)); 
+    inputdiv.appendChild(input1); 
+   } 
+  </script> 
+</head> 
 
-
-document.write(Math.floor(Math.random()*101));
-
-</script>
-
-</body>
+<body> 
+  <div id="inputDiv"></div> 
+  <input type="button" value="Roll!!!" onClick="createInput();" /> 
+</body> 
 </html>
