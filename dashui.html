@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link charset="utf-8" rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="all" />
+		<link charset="utf-8" rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" media="all" />
+
+		<script src="js/jquery.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<title>打水！！！</title>
+	</head>
+	<body>
+<style>
+	.tigerContent{display: block;margin:50px auto;position: relative;width: 310px;}
+	.item{display: inline-block;height: 70px;width: 70px;border: 1px solid #ccc;line-height: 70px;margin: 1px;background: #eee;text-align: center;}
+	.none{display: inline-block;height: 20px;width: 70px;border: 1px solid #fff;line-height: 70px;margin: 1px;}
+	.tigerStartBtn{position: absolute;top:140px;left:120px;}
+	.opa{opacity: 0.5;}
+</style>
+
+
+<div class="container">	
+	<div class="tigerContent">
+	
+	</div>
+</div>
+<script>
+	var sections = ['基哥','君神','博起','爵爷'];
+	var sectionCount = sections.length;
+	var rows = {
+		0:0,
+		1:1,
+		2:2,
+		3:3,
+		4:11,
+		
+		7:4,
+		8:10,
+		
+		11:5,
+		12:9,
+		13:8,
+		14:7,
+		15:6
+	};
+	
+	var bigSection = sections ; 
+	var delCount = 12-sections.length;
+	
+	//随即打乱
+	sections.sort(function(){ return 0.5 - Math.random() });
+	
+	for(var i = 0 ;i<delCount;i++ ){
+		bigSection.push(sections[i]);
+	}
+	
+	var itemHtml = '';
+	var n=0;
+	for(var i=0;i<16;i++ ){
+		if(rows[i]!=null){
+			itemHtml+="<div class='item' index='"+rows[i]+"' >"+bigSection[n]+"</div>";
+			n++;
+		}
+		else{
+			itemHtml+="<div class='none'></div>";
+		}
+		
+		$('.tigerContent').html(itemHtml);
+	}
+	$('<button class="tigerStartBtn btn btn-primary" id="tigerStart" >开始</button>').appendTo($('.tigerContent'));
+	
+	
+	$('#tigerStart').on('click',function(){
+		var time = randomNum(5000,10000);
+		startTiger();
+		$(this).attr('disabled','disabled');
+		setTimeout(function(){speed = 50;},1000);
+		setTimeout(function(){stopTiger();},time);
+		setTimeout(function(){speed = 200;},time-2000);
+	});
+	
+	var lightItem = 0 ;
+	var lightTimer ;
+	var speed = 200;
+	function startTiger(){
+		$('.item').removeClass('opa');
+		$('.item[index="'+lightItem+'"]').addClass('opa');
+		
+		lightItem++;
+		if(lightItem==12){
+			lightItem=0;
+		}
+		lightTimer = setTimeout(function(){startTiger();}, speed);
+	}
+	function stopTiger(){
+		lightItem = 0 ;
+		speed = 200;
+		clearTimeout(lightTimer);
+		$('#tigerStart').removeAttr('disabled');
+	}
+	function randomNum(min,max){
+	    return Math.floor(min+Math.random()*(max-min));	
+	}
+</script>
+</body>
+</html>
